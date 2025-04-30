@@ -1,8 +1,12 @@
 from scapy.all import rdpcap  # Importa la funzione rdpcap da Scapy per leggere pacchetti da un file pcap
 from collections import defaultdict  # Importa defaultdict per gestire i flussi TCP e UDP in modo efficiente
+import argparse
 
 # === CONFIG ===
-PCAP_FILE = "/home/nutria/Downloads/prove/ndpi/Test/mixed.pcap"  # Percorso del file PCAP da analizzare
+def get_args():
+    parser = argparse.ArgumentParser(description="Analizzatore di flussi per identificare traffico OpenVPN")
+    parser.add_argument("pcap_file", help="Percorso del file .pcap da analizzare")
+    return parser.parse_args()  # Percorso del file PCAP da analizzare
 N = 100  # Numero massimo di pacchetti da analizzare per ogni flusso
 MAX_UDP_PAYLOAD = 1000  # Soglia massima dimensione dei primi due pacchetti UDP (usato per evitare pacchetti QUIC)
 
@@ -159,9 +163,12 @@ def analizza_flussi(packets):
     return risultati, flussi_openvpn  # Restituisce i risultati finali e la lista dei flussi OpenVPN
 
 def main():
+    args = get_args()
+    pcap_path = args.pcap_file
+    
     # Legge il file PCAP e carica i pacchetti
-    packets = rdpcap(PCAP_FILE)
-    print(f"[+] Letti {len(packets)} pacchetti da {PCAP_FILE}")
+    packets = rdpcap(pcap_path)
+    print(f"[+] Letti {len(packets)} pacchetti da {pcap_path}")
 
     # Analizza i flussi TCP e UDP
     risultati, flussi_openvpn = analizza_flussi(packets)
