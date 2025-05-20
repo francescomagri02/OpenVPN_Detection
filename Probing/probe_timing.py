@@ -80,7 +80,7 @@ with open(INPUT_FILE, newline='') as infile, open(OUTPUT_FILE, 'w', newline='') 
 
         durate = []                        # Lista dei tempi di risposta per ogni probe
         for name, payload in probes:       # Ciclo su ogni tipo di probe
-            print(f"→ Inviando {name}...")
+            print(f"-> Inviando {name}...")
             t = test_probe(ip, port, payload)        # Testa il probe
             print(f"    Tempo di risposta: {t}s")   # Stampa il risultato
             durate.append(t)                         # Salva il tempo
