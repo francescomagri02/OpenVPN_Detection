@@ -37,6 +37,8 @@ Se Il file online_servers.csv incluso nella repository contiene una lista di ser
 
 Non si garantisce che siano attivi al momento dell'esecuzione. La disposibilità dei server dipende dal mantenimento da parte dei rispettivi volontari.
 
+NB: Affinchè il file di output venga generato correttamente è importante non interrompere forzatamente l'esecuzione dello script.
+
 ## Probes Utilizzati
 
 | First Header  | Second Header |
