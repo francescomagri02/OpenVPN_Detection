@@ -1,45 +1,47 @@
 # Active Probing OpenVPN Traffic Classifier
 
-Questo script Python conduce un'attività di Active Porbing su una lista di server e misura i tempi di chiusura della connessione a una serie di payload inviati. I payload inviati ai server sono pubblicati
-nello studio di [Xue et al.](https://www.usenix.org/system/files/sec22-xue-diwen.pdf)
+This Python script runs an Active Porbing task on a list of servers and measures the connection closing times for a series of payloads sent. The payloads sent to the servers are published in the paper by [Xue et al.](https://www.usenix.org/system/files/sec22-xue-diwen.pdf)
 
-## Requisiti
+## Requirements
 
-- Python 3.7 o superiore
+- Python 3.7 or higher
 
-## Utilizzo
-Per eseguire lo script è necessario passare come argomento
-- File CSV di input contenente gli indirizzi IP dei server da sondare
-- Nome del file CSV di output
-
+## Usage
+To run the script you need to pass one of the following as an argument
+- To Probe multiple targets (1° Mode): Input CSV file containing IP addresses and ports of the servers to probe and Output CSV file name
 ```bash
-python3 probe_timing.py input.csv output.csv
+python3 probing_script.py -i input.csv -o output.csv
 ```
-Esempio:
+- To Probe a single target (2° Mode): IP address and port of the target server
 ```bash
-python3 probe_timing.py online_servers.csv probed_servers.csv
+python3 probing_script.py --addr 10.204.32.123 -p 23
 ```
+
 ## Output
-Il file di output.csv conterrà, per ogni server, una riga con:
-
+(1° Mode) The output.csv file will contain, for each server, a line with:
 ```bash
-IP,Port,Protocol,<tempo_sonda_1>,<tempo_sonda_2>,...,<tempo_sonda_n>
+IP,Port,<probe_time_1>,<probe_time_2>,...,<probe_time_n>,<service_found>
 ```
-Se un probe non riceve risposta entro il timeout, il valore registrato sarà 0.0
+(2° Mode) The script prints the result of each probe (Short Close or Long Close) with the possible service detected
 
-## Validazione e testing
-Se Il file online_servers.csv incluso nella repository contiene una lista di server pubblici presi dal progetto VPNGate, che pubblica periodicamente IP di server OpenVPN a scopo accademico, e altri server di diverso tipo. Nello specifico:
+If a socket has problems, the value logged will be 0.0
 
-- 21 Server OpenVPN;
+## Patterns
+The patterns folder contains the patterns.json detected during the testing phase for some services. If one of the patterns matches perfectly (or with at most one mismatch) with the result of the probe, the server is cataloged with the name of the corresponding pattern. The script is designed so that anyone can add other patterns to make the detection more accurate and varied.
+
+## Validation and testing
+If The online_servers.csv file included in the repository contains a list of public servers taken from the VPNGate project, which periodically publishes OpenVPN server IPs for academic purposes, and other servers of various types. Specifically:
+
+- 21 OpenVPN;
 - 3 HTTP;
 - 3 FTP;
 - 1 SMTP.
 
-Non si garantisce che siano attivi al momento dell'esecuzione. La disposibilità dei server dipende dal mantenimento da parte dei rispettivi volontari.
+There is no guarantee that they will be active at the time of execution. Server availability depends on maintenance by their respective volunteers.
 
-NB: Affinchè il file di output venga generato correttamente è importante non interrompere forzatamente l'esecuzione dello script.
+NB: In order for the output file to be generated correctly, it is important not to forcibly interrupt the execution of the script.
 
-## Probes Utilizzati
+## Probes Used
 
 | First Header  | Second Header |
 | ------------- | ------------- |
@@ -56,4 +58,4 @@ NB: Affinchè il file di output venga generato correttamente è importante non i
 
 
 --- 
-Script sviluppato da Francesco Magrì per fini di analisi del traffico di rete e fingerprinting del traffico VPN. 
+Script developed by Francesco Magrì for network traffic analysis and VPN traffic fingerprinting purposes. 
