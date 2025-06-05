@@ -1,0 +1,5 @@
+{
+  "name": "PPTP",
+  "expected_sequence": ["Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close"]
+}
+

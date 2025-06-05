@@ -1,0 +1,5 @@
+{
+  "name": "OpenVPN",
+  "expected_sequence": ["Short Close", "Long Close", "Long Close", "Long Close", "Long Close", "Long Close", "Short Close", "Short Close", "Short Close", "Short Close"]
+}
+

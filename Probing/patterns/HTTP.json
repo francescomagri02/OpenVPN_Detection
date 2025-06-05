@@ -1,0 +1,5 @@
+{
+  "name": "HTTP",
+  "expected_sequence": ["Short Close", "Short Close", "Long Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close", "Short Close"]
+}
+
